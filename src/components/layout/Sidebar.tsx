@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { MessageSquare, Image, Mic, Eye, Scales, Settings, Plus } from 'lucide-react'
+import { MessageSquare, Image, Mic, Eye, Scales, Settings } from 'lucide-react'
+import { ConversationList } from '../ConversationList'
 
 interface NavItem {
   label: string
@@ -25,16 +26,13 @@ export function Sidebar() {
         </h1>
       </div>
 
-      {/* New Chat Button */}
-      <div className="p-4">
-        <button className="w-full flex items-center gap-2 px-4 py-2 bg-accent-primary text-bg-base rounded-lg hover:bg-accent-glow transition-colors font-medium text-sm">
-          <Plus size={18} />
-          New Chat
-        </button>
+      {/* Conversations */}
+      <div className="flex-1 flex flex-col overflow-hidden p-4 border-b border-border-subtle">
+        <ConversationList />
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 px-2 py-4 space-y-2">
+      <nav className="px-2 py-4 space-y-2">
         {navItems.map((item) => (
           <Link
             key={item.path}
