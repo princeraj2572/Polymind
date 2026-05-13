@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply box-border;
+}
+
+html,
+body {
+  @apply w-full h-full;
+  font-family: 'DM Sans', sans-serif;
+}
+
+body {
+  @apply bg-bg-base text-text-primary overflow-hidden;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  @apply w-2 h-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-bg-surface;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-border-default rounded-full hover:bg-border-active;
+}
+
+/* Focus Styles */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  @apply outline-none ring-2 ring-accent-primary ring-offset-2 ring-offset-bg-base;
+}
+
+/* Selection */
+::selection {
+  @apply bg-accent-primary text-bg-base;
+}
+
+::-moz-selection {
+  @apply bg-accent-primary text-bg-base;
+}

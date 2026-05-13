@@ -1,0 +1,88 @@
+/* Markdown Content Styling */
+.markdown-content {
+  @apply text-text-primary;
+}
+
+.markdown-content h1 {
+  @apply text-2xl font-bold mb-3 mt-4 first:mt-0;
+}
+
+.markdown-content h2 {
+  @apply text-xl font-bold mb-2 mt-3;
+}
+
+.markdown-content h3 {
+  @apply text-lg font-semibold mb-2 mt-2;
+}
+
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  @apply font-semibold mb-1 mt-2;
+}
+
+.markdown-content p {
+  @apply mb-2 leading-relaxed;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  @apply mb-2 ml-4;
+}
+
+.markdown-content li {
+  @apply mb-1;
+}
+
+.markdown-content ul li {
+  @apply list-disc;
+}
+
+.markdown-content ol li {
+  @apply list-decimal;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-accent-primary pl-4 py-2 mb-2 italic text-text-secondary;
+}
+
+.markdown-content code {
+  @apply bg-bg-surface px-2 py-0.5 rounded font-mono text-sm text-accent-primary;
+}
+
+.markdown-content pre {
+  @apply bg-bg-surface p-4 rounded-lg overflow-x-auto mb-2;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent px-0 py-0 rounded-none text-text-primary;
+}
+
+.markdown-content a {
+  @apply text-accent-primary hover:underline;
+}
+
+.markdown-content table {
+  @apply w-full border-collapse mb-2;
+}
+
+.markdown-content th,
+.markdown-content td {
+  @apply border border-border-default px-3 py-2 text-left;
+}
+
+.markdown-content th {
+  @apply bg-bg-elevated font-semibold;
+}
+
+.markdown-content tr:nth-child(even) {
+  @apply bg-bg-surface;
+}
+
+.markdown-content hr {
+  @apply border-border-subtle my-4;
+}
+
+.markdown-content img {
+  @apply rounded-lg max-w-full;
+}
