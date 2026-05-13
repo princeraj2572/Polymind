@@ -1,15 +1,18 @@
 import { useEffect, useRef } from 'react'
 import { Message } from '../../types'
 import { MessageBubble } from './MessageBubble'
+import { MessageSkeleton } from '../Skeleton'
 
 interface MessageListProps {
   messages: Message[]
+  isLoading?: boolean
   onCopyMessage?: (id: string) => void
   onRetryMessage?: (id: string) => void
 }
 
 export function MessageList({
   messages,
+  isLoading = false,
   onCopyMessage,
   onRetryMessage,
 }: MessageListProps) {
@@ -17,9 +20,9 @@ export function MessageList({
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+  }, [messages, isLoading])
 
-  if (messages.length === 0) {
+  if (messages.length === 0 && !isLoading) {
     return (
       <div className="flex-1 flex items-center justify-center">
         <div className="text-center">
@@ -47,6 +50,7 @@ export function MessageList({
           onRetry={() => onRetryMessage?.(message.id)}
         />
       ))}
+      {isLoading && <MessageSkeleton />}
       <div ref={messagesEndRef} />
     </div>
   )

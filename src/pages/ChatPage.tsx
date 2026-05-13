@@ -28,7 +28,7 @@ export function ChatPage() {
       <Sidebar />
       <ContentArea>
         <TopBar title="Chat" actions={<ModelPicker />} />
-        <MessageList messages={messages} />
+        <MessageList messages={messages} isLoading={isLoading} />
         <InputBar
           onSubmit={handleSubmitMessage}
           isLoading={isLoading}
