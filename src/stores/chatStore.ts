@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import { Conversation, Message } from '../types'
 
 interface ChatStore {
@@ -18,7 +19,9 @@ interface ChatStore {
 
 const generateId = () => Math.random().toString(36).slice(2, 11)
 
-export const useChatStore = create<ChatStore>((set, get) => ({
+export const useChatStore = create<ChatStore>()(
+  persist(
+    (set, get) => ({
   conversations: [],
   activeConversationId: null,
   isStreaming: false,
@@ -100,4 +103,14 @@ export const useChatStore = create<ChatStore>((set, get) => ({
       }
     })
   },
-}))
+    }),
+    {
+      name: 'polymind-chat',
+      version: 1,
+      partialize: (state) => ({
+        conversations: state.conversations,
+        activeConversationId: state.activeConversationId,
+      }),
+    }
+  )
+)
