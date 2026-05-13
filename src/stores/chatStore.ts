@@ -1,0 +1,103 @@
+import { create } from 'zustand'
+import { Conversation, Message } from '../types'
+
+interface ChatStore {
+  conversations: Conversation[]
+  activeConversationId: string | null
+  isStreaming: boolean
+  streamingMessageId: string | null
+
+  // Actions
+  createConversation: () => void
+  setActiveConversation: (id: string) => void
+  addMessage: (message: Message) => void
+  appendChunk: (messageId: string, chunk: string) => void
+  finalizeMessage: (messageId: string) => void
+  clearConversation: () => void
+}
+
+const generateId = () => Math.random().toString(36).slice(2, 11)
+
+export const useChatStore = create<ChatStore>((set, get) => ({
+  conversations: [],
+  activeConversationId: null,
+  isStreaming: false,
+  streamingMessageId: null,
+
+  createConversation: () => {
+    const newConv: Conversation = {
+      id: generateId(),
+      title: 'New Conversation',
+      messages: [],
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    }
+    set((state) => ({
+      conversations: [newConv, ...state.conversations],
+      activeConversationId: newConv.id,
+    }))
+  },
+
+  setActiveConversation: (id) => {
+    set({ activeConversationId: id })
+  },
+
+  addMessage: (message) => {
+    set((state) => {
+      if (!state.activeConversationId) return state
+      return {
+        conversations: state.conversations.map((conv) =>
+          conv.id === state.activeConversationId
+            ? {
+                ...conv,
+                messages: [...conv.messages, message],
+                updatedAt: Date.now(),
+              }
+            : conv
+        ),
+        isStreaming: message.role === 'assistant' ? true : state.isStreaming,
+        streamingMessageId: message.role === 'assistant' ? message.id : state.streamingMessageId,
+      }
+    })
+  },
+
+  appendChunk: (messageId, chunk) => {
+    set((state) => {
+      if (!state.activeConversationId) return state
+      return {
+        conversations: state.conversations.map((conv) =>
+          conv.id === state.activeConversationId
+            ? {
+                ...conv,
+                messages: conv.messages.map((msg) =>
+                  msg.id === messageId
+                    ? { ...msg, content: msg.content + chunk }
+                    : msg
+                ),
+              }
+            : conv
+        ),
+      }
+    })
+  },
+
+  finalizeMessage: (messageId) => {
+    set({
+      isStreaming: false,
+      streamingMessageId: null,
+    })
+  },
+
+  clearConversation: () => {
+    set((state) => {
+      if (!state.activeConversationId) return state
+      return {
+        conversations: state.conversations.map((conv) =>
+          conv.id === state.activeConversationId
+            ? { ...conv, messages: [] }
+            : conv
+        ),
+      }
+    })
+  },
+}))
