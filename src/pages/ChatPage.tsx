@@ -1,15 +1,25 @@
+import { useEffect } from 'react'
 import { Sidebar, TopBar, ContentArea } from '../components/layout'
 import { MessageList, InputBar } from '../components/chat'
 import { ModelPicker } from '../components/models'
 import { useChat } from '../hooks/useChat'
 import { useConversation } from '../hooks/useConversation'
+import { useToast } from '../context/ToastContext'
 
 export function ChatPage() {
   const { messages, isLoading, error, sendMessage, clearError } = useChat()
+  const { showToast } = useToast()
   useConversation() // Auto-create first conversation
 
+  // Show error as toast when it appears
+  useEffect(() => {
+    if (error) {
+      showToast(error, 'error')
+      clearError()
+    }
+  }, [error, showToast, clearError])
+
   const handleSubmitMessage = async (content: string) => {
-    clearError()
     await sendMessage(content)
   }
 
@@ -18,11 +28,6 @@ export function ChatPage() {
       <Sidebar />
       <ContentArea>
         <TopBar title="Chat" actions={<ModelPicker />} />
-        {error && (
-          <div className="px-6 py-3 bg-status-error/10 border-b border-status-error text-status-error text-sm">
-            {error}
-          </div>
-        )}
         <MessageList messages={messages} />
         <InputBar
           onSubmit={handleSubmitMessage}
