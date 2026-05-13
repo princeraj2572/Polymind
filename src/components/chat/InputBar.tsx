@@ -33,8 +33,8 @@ export function InputBar({
   }
 
   return (
-    <div className="p-6 border-t border-border-subtle bg-bg-surface">
-      <div className="flex gap-3">
+    <div className="p-3 sm:p-6 border-t border-border-subtle bg-bg-surface">
+      <div className="flex gap-2 sm:gap-3">
         <Textarea
           ref={textareaRef}
           value={value}

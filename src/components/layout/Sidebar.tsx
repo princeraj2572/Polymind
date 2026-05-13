@@ -18,7 +18,7 @@ const navItems: NavItem[] = [
 
 export function Sidebar() {
   return (
-    <div className="w-56 bg-bg-base border-r border-border-subtle h-screen flex flex-col">
+    <div className="hidden lg:w-56 lg:flex lg:flex-col bg-bg-base border-r border-border-subtle h-screen">
       {/* Logo */}
       <div className="p-4 border-b border-border-subtle">
         <h1 className="text-xl font-bold text-accent-primary font-display">
