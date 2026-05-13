@@ -1,6 +1,7 @@
 import { BaseAdapter } from './base'
 import { GroqAdapter } from './groq'
 import { GeminiAdapter } from './gemini'
+import { MistralAdapter } from './mistral'
 import { useSettingsStore } from '../stores/settingsStore'
 
 class AdapterRegistry {
@@ -41,6 +42,13 @@ class AdapterRegistry {
       this.register('gemini', new GeminiAdapter(settings.apiKeys.gemini))
     } else {
       this.register('gemini', new GeminiAdapter(''))
+    }
+
+    // Register Mistral adapter if key exists
+    if (settings.apiKeys.mistral) {
+      this.register('mistral', new MistralAdapter(settings.apiKeys.mistral))
+    } else {
+      this.register('mistral', new MistralAdapter(''))
     }
   }
 }
