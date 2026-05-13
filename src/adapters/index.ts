@@ -1,5 +1,6 @@
 import { BaseAdapter } from './base'
 import { GroqAdapter } from './groq'
+import { GeminiAdapter } from './gemini'
 import { useSettingsStore } from '../stores/settingsStore'
 
 class AdapterRegistry {
@@ -35,7 +36,12 @@ class AdapterRegistry {
       this.register('groq', new GroqAdapter(''))
     }
 
-    // Future: Add Gemini, Mistral, etc.
+    // Register Gemini adapter if key exists
+    if (settings.apiKeys.gemini) {
+      this.register('gemini', new GeminiAdapter(settings.apiKeys.gemini))
+    } else {
+      this.register('gemini', new GeminiAdapter(''))
+    }
   }
 }
 
