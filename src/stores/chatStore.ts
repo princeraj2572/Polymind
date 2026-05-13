@@ -15,6 +15,7 @@ interface ChatStore {
   appendChunk: (messageId: string, chunk: string) => void
   finalizeMessage: (messageId: string) => void
   clearConversation: () => void
+  deleteConversation: (id: string) => void
 }
 
 const generateId = () => Math.random().toString(36).slice(2, 11)
@@ -100,6 +101,23 @@ export const useChatStore = create<ChatStore>()(
             ? { ...conv, messages: [] }
             : conv
         ),
+      }
+    })
+  },
+
+  deleteConversation: (id: string) => {
+    set((state) => {
+      const newConversations = state.conversations.filter((c) => c.id !== id)
+      let newActiveId = state.activeConversationId
+
+      // If deleting active conversation, switch to another one
+      if (id === state.activeConversationId) {
+        newActiveId = newConversations.length > 0 ? newConversations[0].id : null
+      }
+
+      return {
+        conversations: newConversations,
+        activeConversationId: newActiveId,
       }
     })
   },

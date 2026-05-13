@@ -7,16 +7,10 @@ export function ConversationList() {
   const activeConversationId = useChatStore((state) => state.activeConversationId)
   const setActiveConversation = useChatStore((state) => state.setActiveConversation)
   const createConversation = useChatStore((state) => state.createConversation)
+  const deleteConversation = useChatStore((state) => state.deleteConversation)
 
   const handleDeleteConversation = (id: string) => {
-    // For now, just switch to another conversation if deleting active one
-    if (id === activeConversationId && conversations.length > 1) {
-      const nextConv = conversations.find((c) => c.id !== id)
-      if (nextConv) {
-        setActiveConversation(nextConv.id)
-      }
-    }
-    // TODO: Add proper deletion to store
+    deleteConversation(id)
   }
 
   return (
