@@ -1,12 +1,37 @@
 import { BaseAdapter } from './base'
-import { Message, ChatOptions } from '../types'
+import type { Message, ChatOptions } from '../types'
 
 export class GeminiAdapter extends BaseAdapter {
+  id = 'gemini'
+  name = 'Google Gemini'
+  provider = 'gemini'
+
   private apiKey: string
 
   constructor(apiKey: string) {
     super()
     this.apiKey = apiKey
+  }
+
+  protected getApiKey(): string | null {
+    return this.apiKey || null
+  }
+
+  async validateKey(key: string): Promise<boolean> {
+    if (!key) return false
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${key}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: 'test' }] }] }),
+        }
+      )
+      return response.ok
+    } catch {
+      return false
+    }
   }
 
   async *chat(messages: Message[], options: ChatOptions): AsyncGenerator<string> {
@@ -80,17 +105,6 @@ export class GeminiAdapter extends BaseAdapter {
       }
     } finally {
       reader.releaseLock()
-    }
-  }
-
-  async validateKey(key: string): Promise<boolean> {
-    try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash?key=${key}`
-      )
-      return response.ok
-    } catch {
-      return false
     }
   }
 }

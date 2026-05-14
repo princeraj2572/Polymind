@@ -1,5 +1,5 @@
 import { Copy } from 'lucide-react'
-import { SyntaxHighlighter } from 'react-syntax-highlighter'
+import SyntaxHighlighter from 'react-syntax-highlighter'
 import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import { useState } from 'react'
 

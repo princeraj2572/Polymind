@@ -1,5 +1,5 @@
 import { BaseAdapter } from './base'
-import { Message, ChatOptions } from '../types'
+import type { Message, ChatOptions } from '../types'
 
 export class GroqAdapter extends BaseAdapter {
   id = 'groq'

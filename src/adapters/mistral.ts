@@ -1,12 +1,40 @@
 import { BaseAdapter } from './base'
-import { Message, ChatOptions } from '../types'
+import type { Message, ChatOptions } from '../types'
 
 export class MistralAdapter extends BaseAdapter {
+  id = 'mistral'
+  name = 'Mistral AI'
+  provider = 'mistral'
+
   private apiKey: string
 
   constructor(apiKey: string) {
     super()
     this.apiKey = apiKey
+  }
+
+  protected getApiKey(): string | null {
+    return this.apiKey || null
+  }
+
+  async validateKey(key: string): Promise<boolean> {
+    if (!key) return false
+    try {
+      const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${key}`,
+        },
+        body: JSON.stringify({
+          model: 'mistral-small',
+          messages: [{ role: 'user', content: 'test' }],
+        }),
+      })
+      return response.ok || response.status === 400 // 400 is expected for test
+    } catch {
+      return false
+    }
   }
 
   async *chat(messages: Message[], options: ChatOptions): AsyncGenerator<string> {
@@ -80,19 +108,6 @@ export class MistralAdapter extends BaseAdapter {
       }
     } finally {
       reader.releaseLock()
-    }
-  }
-
-  async validateKey(key: string): Promise<boolean> {
-    try {
-      const response = await fetch('https://api.mistral.ai/v1/models', {
-        headers: {
-          Authorization: `Bearer ${key}`,
-        },
-      })
-      return response.ok
-    } catch {
-      return false
     }
   }
 }

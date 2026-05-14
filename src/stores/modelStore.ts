@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { ModelDefinition } from '../types'
+import type { ModelDefinition } from '../types'
 
 interface ModelStore {
   allModels: ModelDefinition[]

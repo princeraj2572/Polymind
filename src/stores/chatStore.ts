@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { Conversation, Message } from '../types'
+import type { Conversation, Message } from '../types'
 
 interface ChatStore {
   conversations: Conversation[]
@@ -22,7 +22,7 @@ const generateId = () => Math.random().toString(36).slice(2, 11)
 
 export const useChatStore = create<ChatStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
   conversations: [],
   activeConversationId: null,
   isStreaming: false,
@@ -85,7 +85,7 @@ export const useChatStore = create<ChatStore>()(
     })
   },
 
-  finalizeMessage: (messageId) => {
+  finalizeMessage: (_messageId) => {
     set({
       isStreaming: false,
       streamingMessageId: null,

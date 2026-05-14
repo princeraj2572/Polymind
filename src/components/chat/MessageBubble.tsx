@@ -1,4 +1,4 @@
-import { Message } from '../../types'
+import type { Message } from '../../types'
 import { Copy, RotateCcw, ThumbsUp, ThumbsDown } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 
@@ -27,11 +27,11 @@ export function MessageBubble({ message, onCopy, onRetry }: MessageBubbleProps) 
             {message.modelId || 'Assistant'}
           </p>
         )}
-        <div className="text-sm leading-relaxed markdown-content">
+        <div className="text-sm leading-relaxed markdown-content prose prose-invert max-w-none">
           {isUser ? (
             <p className="whitespace-pre-wrap">{message.content}</p>
           ) : (
-            <ReactMarkdown className="prose prose-invert max-w-none text-sm">
+            <ReactMarkdown>
               {message.content}
             </ReactMarkdown>
           )}

@@ -1,4 +1,4 @@
-import { Message, ChatOptions, ImageOptions } from '../types'
+import type { Message, ChatOptions, ImageOptions } from '../types'
 
 export abstract class BaseAdapter {
   abstract id: string

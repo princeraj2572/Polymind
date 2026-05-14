@@ -25,6 +25,7 @@ export interface ModelDefinition {
 }
 
 export interface ChatOptions {
+  model?: string
   temperature?: number
   maxTokens?: number
   systemPrompt?: string
