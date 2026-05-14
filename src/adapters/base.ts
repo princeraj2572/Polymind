@@ -25,7 +25,7 @@ export abstract class BaseAdapter {
 
   async transcribe?(audioBlob: Blob): Promise<string>
 
-  protected async handleStream(
+  protected async *handleStream(
     response: Response
   ): AsyncGenerator<string> {
     if (!response.body) {

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { MessageSquare, Image, Mic, Eye, Scales, Settings } from 'lucide-react'
+import { MessageSquare, Image, Mic, Eye, Scale, Settings } from 'lucide-react'
 import { ConversationList } from '../ConversationList'
 
 interface NavItem {
@@ -13,7 +13,7 @@ const navItems: NavItem[] = [
   { label: 'Image', icon: <Image size={20} />, path: '/image' },
   { label: 'Voice', icon: <Mic size={20} />, path: '/voice' },
   { label: 'Vision', icon: <Eye size={20} />, path: '/vision' },
-  { label: 'Compare', icon: <Scales size={20} />, path: '/compare' },
+  { label: 'Compare', icon: <Scale size={20} />, path: '/compare' },
 ]
 
 export function Sidebar() {

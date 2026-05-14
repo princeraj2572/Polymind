@@ -1,6 +1,6 @@
 import { Trash2, Plus } from 'lucide-react'
-import { useChatStore } from '../../stores/chatStore'
-import { Button } from '../ui'
+import { useChatStore } from '../stores/chatStore'
+import { Button } from './ui/Button'
 
 export function ConversationList() {
   const conversations = useChatStore((state) => state.conversations)

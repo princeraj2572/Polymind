@@ -9,39 +9,39 @@ export class MistralAdapter extends BaseAdapter {
     this.apiKey = apiKey
   }
 
-  async chat(messages: Message[], options: ChatOptions): Promise<AsyncGenerator<string>> {
-    return this.handleStream(async () => {
-      const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.apiKey}`,
-        },
-        body: JSON.stringify({
-          model: options.model,
-          messages: messages.map((msg) => ({
-            role: msg.role,
-            content: msg.content,
-          })),
-          temperature: options.temperature,
-          max_tokens: options.maxTokens,
-          stream: true,
-        }),
-      })
+  async *chat(messages: Message[], options: ChatOptions): AsyncGenerator<string> {
+    const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.apiKey}`,
+      },
+      body: JSON.stringify({
+        model: options.model,
+        messages: messages.map((msg) => ({
+          role: msg.role,
+          content: msg.content,
+        })),
+        temperature: options.temperature,
+        max_tokens: options.maxTokens,
+        stream: true,
+      }),
+    })
 
-      if (!response.ok) {
-        const error = await response.json()
-        throw new Error(
-          `Mistral API error: ${error.message || response.statusText}`
-        )
-      }
+    if (!response.ok) {
+      const error = await response.json()
+      throw new Error(
+        `Mistral API error: ${error.message || response.statusText}`
+      )
+    }
 
-      if (!response.body) throw new Error('No response body')
+    if (!response.body) throw new Error('No response body')
 
-      const reader = response.body.getReader()
-      const decoder = new TextDecoder()
-      let buffer = ''
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let buffer = ''
 
+    try {
       while (true) {
         const { done, value } = await reader.read()
         if (done) break
@@ -78,7 +78,9 @@ export class MistralAdapter extends BaseAdapter {
           }
         }
       }
-    })
+    } finally {
+      reader.releaseLock()
+    }
   }
 
   async validateKey(key: string): Promise<boolean> {
