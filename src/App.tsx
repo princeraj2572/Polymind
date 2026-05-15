@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ToastProvider } from './context/ToastContext'
@@ -8,11 +8,18 @@ import { ChatPage } from './pages/ChatPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts'
 import { useChatStore } from './stores/chatStore'
+import { useSettingsStore } from './stores/settingsStore'
+import { adapterRegistry } from './adapters'
 
 function AppContent() {
   const navigate = useNavigate()
   const createConversation = useChatStore((state) => state.createConversation)
+  const apiKeys = useSettingsStore((state) => state.apiKeys)
   const [showHelp, setShowHelp] = useState(false)
+
+  useEffect(() => {
+    adapterRegistry.refreshAdapters()
+  }, [apiKeys])
 
   useKeyboardShortcuts([
     {

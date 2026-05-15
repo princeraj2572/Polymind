@@ -41,7 +41,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     }, [autoResize, ref])
 
     return (
-      <div className="flex flex-col gap-1">
+      <div className="flex min-w-0 flex-1 flex-col gap-1">
         {label && (
           <label className="text-sm font-medium text-text-secondary">
             {label}
@@ -49,7 +49,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
         <textarea
           ref={ref}
-          className={`px-3 py-2 text-base bg-bg-surface border border-border-default rounded-lg text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent-primary focus:border-transparent transition-all resize-none ${className}`}
+          className={`w-full rounded-2xl border border-white/8 bg-white/3 px-4 py-3 text-base text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-accent-primary/60 focus:border-accent-primary/40 transition-all resize-none ${className}`}
           {...props}
         />
         {error && <span className="text-xs text-status-error">{error}</span>}

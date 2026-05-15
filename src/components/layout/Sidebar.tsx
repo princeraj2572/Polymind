@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { MessageSquare, Image, Mic, Eye, Scale, Settings } from 'lucide-react'
 import { ConversationList } from '../ConversationList'
+import { Separator } from '../ui'
 
 interface NavItem {
   label: string
@@ -18,26 +19,33 @@ const navItems: NavItem[] = [
 
 export function Sidebar() {
   return (
-    <div className="hidden lg:w-56 lg:flex lg:flex-col bg-bg-base border-r border-border-subtle h-screen">
-      {/* Logo */}
-      <div className="p-4 border-b border-border-subtle">
-        <h1 className="text-xl font-bold text-accent-primary font-display">
+    <aside className="flex w-[18rem] shrink-0 flex-col overflow-hidden border-r border-white/10 bg-[#0f0f0f]">
+      <div className="space-y-3 px-4 py-4">
+        <div className="inline-flex items-center gap-2 rounded-md border border-white/10 bg-white/5 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.18em] text-text-secondary">
+          PolyMind
+        </div>
+        <h1 className="mt-4 text-xl font-semibold tracking-tight text-text-primary font-display">
           PolyMind
         </h1>
+        <p className="mt-2 text-sm leading-6 text-text-secondary">
+          Your chat workspace.
+        </p>
       </div>
 
-      {/* Conversations */}
-      <div className="flex-1 flex flex-col overflow-hidden p-4 border-b border-border-subtle">
+      <Separator />
+
+      <div className="flex-1 overflow-hidden px-3 py-3">
         <ConversationList />
       </div>
 
-      {/* Navigation */}
-      <nav className="px-2 py-4 space-y-2">
+      <Separator />
+
+      <nav className="space-y-1 px-3 py-3">
         {navItems.map((item) => (
           <Link
             key={item.path}
             to={item.path}
-            className="flex items-center gap-3 px-4 py-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-hover transition-colors"
+            className="flex items-center gap-3 rounded-lg border border-transparent px-3 py-2.5 text-sm font-medium text-text-secondary transition-all hover:bg-white/5 hover:text-text-primary"
           >
             {item.icon}
             <span className="text-sm font-medium">{item.label}</span>
@@ -45,16 +53,17 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-border-subtle space-y-2">
+      <Separator />
+
+      <div className="p-3">
         <Link
           to="/settings"
-          className="flex items-center gap-3 px-4 py-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-hover transition-colors"
+          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-text-secondary transition-all hover:bg-white/5 hover:text-text-primary"
         >
           <Settings size={20} />
           <span className="text-sm font-medium">Settings</span>
         </Link>
       </div>
-    </div>
+    </aside>
   )
 }

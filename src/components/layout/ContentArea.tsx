@@ -6,7 +6,7 @@ interface ContentAreaProps {
 
 export function ContentArea({ children }: ContentAreaProps) {
   return (
-    <div className="flex-1 flex flex-col bg-bg-base overflow-hidden">
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden bg-[#111111]">
       {children}
     </div>
   )

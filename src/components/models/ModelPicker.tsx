@@ -30,18 +30,18 @@ export function ModelPicker() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-bg-elevated border border-border-default rounded-lg text-text-primary hover:bg-bg-hover transition-colors text-sm"
+        className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-text-primary transition-colors hover:bg-white/8"
       >
-        <span className="font-mono">{selected?.name || 'Select model'}</span>
+        <span className="max-w-[12rem] truncate font-medium">{selected?.name || 'Select model'}</span>
         <ChevronDown size={16} />
       </button>
 
       {isOpen && (
-        <div className="absolute top-full mt-2 w-64 bg-bg-elevated border border-border-default rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
-          <div className="p-2">
+        <div className="absolute right-0 top-full z-50 mt-3 w-72 max-h-96 overflow-y-auto rounded-3xl border border-white/10 bg-[#181818]/95 p-2 shadow-[0_24px_80px_rgba(0,0,0,0.42)] backdrop-blur-2xl">
+          <div className="p-1">
             {Object.entries(byProvider).map(([provider, models]) => (
               <div key={provider}>
-                <p className="px-3 py-2 text-xs font-semibold text-text-muted uppercase tracking-wider">
+                <p className="px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-text-secondary">
                   {provider}
                 </p>
                 {models.map((model) => {
@@ -53,12 +53,12 @@ export function ModelPicker() {
                       key={model.id}
                       onClick={() => handleSelect(model.id)}
                       disabled={!hasKey && model.provider !== 'pollinations'}
-                      className={`w-full text-left px-3 py-2 rounded text-sm transition-colors flex items-center justify-between ${
+                      className={`w-full rounded-2xl px-3 py-3 text-left text-sm transition-colors flex items-center justify-between ${
                         isSelected
-                          ? 'bg-accent-primary text-bg-base'
+                          ? 'bg-white text-[#111111]'
                           : hasKey || model.provider === 'pollinations'
-                            ? 'text-text-primary hover:bg-bg-hover'
-                            : 'text-text-muted opacity-50 cursor-not-allowed'
+                            ? 'text-text-primary hover:bg-white/8'
+                            : 'cursor-not-allowed text-text-muted opacity-50'
                       }`}
                     >
                       <div>
